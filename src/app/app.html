@@ -7,9 +7,19 @@
 
   <ion-content>
     <ion-list>
-      <button menuClose ion-item *ngFor="let p of pages" (click)="openPage(p)">
-        {{p.title}}
-      </button>
+  <ion-item>
+    <ion-thumbnail item-start>
+      <img src="assets/imgs/logo.png">
+    </ion-thumbnail>
+    <h2>Jelandi User</h2>
+    <p>jelandiuser@gmail.com</p>
+  </ion-item>
+   </ion-list>
+    <ion-list>
+      <ion-item menuClose *ngFor="let p of pages" (click)="openPage(p)">
+        <ion-icon name="{{p.icon}}" item-start></ion-icon>
+           {{p.title}}
+      </ion-item>
     </ion-list>
   </ion-content>
 

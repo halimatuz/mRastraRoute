@@ -1,0 +1,46 @@
+
+<ion-header>
+
+  <ion-navbar>
+    <ion-title>Detail Route</ion-title>
+  </ion-navbar>
+
+</ion-header>
+
+
+<ion-content >
+<div padding>
+  <ion-segment [(ngModel)]="pet">
+    <ion-segment-button value="kittens">
+      Kittens
+    </ion-segment-button>
+    <ion-segment-button value="puppies">
+      Puppies
+    </ion-segment-button>
+  </ion-segment>
+</div>
+
+<div [ngSwitch]="pet">
+  <ion-list *ngSwitchCase="'puppies'">
+    <ion-item (click)="itemTapped($event, 'gudang1')">
+      <ion-thumbnail item-start>
+        <img src="assets/imgs/logo.png">
+      </ion-thumbnail>
+      <h2>My Neighbor Totoro</h2>
+      <p>Hayao Miyazaki • 1988</p>
+      <button ion-button clear item-end><ion-icon name="arrow-dropright"></ion-icon></button>
+    </ion-item>
+
+  </ion-list>
+
+  <ion-list *ngSwitchCase="'kittens'">
+    <ion-item>
+      <ion-thumbnail item-start>
+        <img src="assets/imgs/warehouse.png">
+      </ion-thumbnail>
+      <h2>Luna</h2>
+    </ion-item>
+  
+  </ion-list>
+</div>
+</ion-content>
