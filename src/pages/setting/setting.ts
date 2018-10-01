@@ -1,37 +1,130 @@
 import { Component } from '@angular/core';
-import { NavController, NavParams } from 'ionic-angular';
+import { NavController, NavParams, ToastController } from 'ionic-angular';
+
+import { AngularFireAuth } from 'angularfire2/auth';
+import { MyApp } from '../../app/app.component';
 
 @Component({
   selector: 'page-setting',
   templateUrl: 'setting.html'
 })
 export class SettingPage {
-  selectedItem: any;
-  icons: string[];
-  items: Array<{title: string, note: string, icon: string}>;
+ loginData = {
+    email: '',
+    username: '',
+    photoUrl: '',
+    provider:'',
+  };
+  SelectedUser='';
+  pass1='';
+  pass2='';
 
-  constructor(public navCtrl: NavController, public navParams: NavParams) {
-    // If we navigated to this page, we will have an item available as a nav param
-    this.selectedItem = navParams.get('item');
-
-    // Let's populate this page with some filler content for funzies
-    this.icons = ['flask', 'wifi', 'beer', 'football', 'basketball', 'paper-plane',
-    'american-football', 'boat', 'bluetooth', 'build'];
-
-    this.items = [];
-    for (let i = 1; i < 11; i++) {
-      this.items.push({
-        title: 'Item ' + i,
-        note: 'This is item #' + i,
-        icon: this.icons[Math.floor(Math.random() * this.icons.length)]
-      });
-    }
+  constructor(
+    public navCtrl: NavController, 
+    public navParams: NavParams,
+    private afAuth: AngularFireAuth,
+    private toastCtrl: ToastController
+    ) {
+    
   }
 
-  itemTapped(event, item) {
-    // That's right, we're pushing to ourselves!
-    this.navCtrl.push(SettingPage, {
-      item: item
+  ionViewDidLoad() {
+    this.afAuth.authState.subscribe(auth => {
+      //console.log(auth);
+      if(auth){
+        
+        this.loginData.email=auth.email;
+        this.loginData.username=auth.displayName;
+        this.loginData.provider=auth.providerData[0].providerId;
+        if(auth.photoURL!=null){
+          this.loginData.photoUrl=auth.photoURL;
+        }
+        else{
+          this.loginData.photoUrl='assets/imgs/logo.png';
+        }
+      }
+        
     });
   }
+  edit(){
+    this.SelectedUser=this.loginData.username;
+  }
+  submit(){
+    if(this.loginData.provider=="password"){
+                if(this.pass1!=this.pass2){
+                  let toast = this.toastCtrl.create({
+                      message: "Password yang Anda Masukkan Tidak Valid",
+                      duration: 5000
+                    });
+                    toast.present();
+                }
+                else{
+                this.updateCurrentUser(this.SelectedUser)
+                .then(res => {
+                console.log(res);
+                }, err => {
+                    let toast = this.toastCtrl.create({
+                      message: err,
+                      duration: 5000
+                    });
+                    toast.present();
+                });
+                this.updateCurrentUser2(this.pass1)
+                .then(res => {
+                this.signOut();
+
+                }, err => {
+                    let toast = this.toastCtrl.create({
+                      message: err,
+                      duration: 5000
+                    });
+                    toast.present();
+                });
+                }
+        }
+        else{
+            this.updateCurrentUser(this.loginData)
+                .then(res => {
+                location.reload();
+                this.navCtrl.setRoot(MyApp);
+                }, err => {
+                    let toast = this.toastCtrl.create({
+                      message: err,
+                      duration: 5000
+                    });
+                    toast.present();
+                });
+         
+        }
+
+    
+    
+  }
+  updateCurrentUser(value){
+    return new Promise<any>((resolve, reject) => {
+      var user = this.afAuth.auth.currentUser;
+     
+      user.updateProfile({
+        displayName: value,
+        photoURL: user.photoURL
+      }).then (res => {
+        resolve(res)
+        
+      }, err => reject(err));
+    })
+  }
+  updateCurrentUser2(value){
+    return new Promise<any>((resolve, reject) => {
+       var user = this.afAuth.auth.currentUser;
+      user.updatePassword(value).then (res => {
+        resolve(res)
+      }, err => reject(err));
+     
+    })
+  }
+   signOut() {
+    this.afAuth.auth.signOut();
+  }
+
+  
 }

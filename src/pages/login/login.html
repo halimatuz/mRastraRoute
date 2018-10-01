@@ -13,6 +13,22 @@
 </ion-header>
 
 
-<ion-content padding>
+<ion-content padding >
+  <ion-card style="padding:10px; text-align: center" >
+  <ion-card-header style="background-color:orange">
+    <h2><strong>LOGIN FORM</strong></h2>
+  </ion-card-header>
+  <ion-list>
+  <ion-item  >
+    <ion-label style="color:black;text-align: center" floating>Email</ion-label>
+    <ion-input type="email" [(ngModel)]="loginData.email" required></ion-input>
+  </ion-item>
+    <ion-item >
+    <ion-label  style="color:black;text-align: center" floating>Password</ion-label>
+    <ion-input type="password" [(ngModel)]="loginData.password" required></ion-input>
+  </ion-item>
+  <button style="background-color:orange;color:black" ion-button block (click)="login()">Log In</button>
+  </ion-list>
+    </ion-card>
 
 </ion-content>

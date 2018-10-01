@@ -11,37 +11,18 @@
   <ion-grid>
   <ion-row >
 
-    <ion-col col-6>
-      <ion-card (click)="itemTapped($event, 'gudang1')">
+    <ion-col col-6 *ngFor="let item of gudangList; index as i; ">
+      <ion-card (click)="itemTapped($event, i)">
            
         <ion-card-header style="text-align: center">
           <img  src="assets/imgs/warehouse.png" alt="Gudang">
-           <h2><strong>Gudang 1</strong></h2>
+           <h2><strong>{{item.namaGudang}}</strong></h2>
         </ion-card-header>
 
       </ion-card>
     </ion-col>
 
- <ion-col col-6>
-      <ion-card >
-           
-        <ion-card-header style="text-align: center">
-          <img  src="assets/imgs/warehouse.png" alt="Gudang">
-           <h2><strong>Gudang 1</strong></h2>
-        </ion-card-header>
-
-      </ion-card>
-    </ion-col>
-     <ion-col col-6>
-      <ion-card >
-           
-        <ion-card-header style="text-align: center">
-          <img  src="assets/imgs/warehouse.png" alt="Gudang">
-           <h2><strong>Gudang 1</strong></h2>
-        </ion-card-header>
-
-      </ion-card>
-    </ion-col>
+ 
     
   </ion-row>
 </ion-grid>

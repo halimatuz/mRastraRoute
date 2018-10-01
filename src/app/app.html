@@ -1,4 +1,4 @@
-<ion-menu [content]="content">
+<ion-menu [content]="content" [swipeEnabled]="false">
   <ion-header>
     <ion-toolbar>
       <ion-title>Menu</ion-title>
@@ -7,12 +7,12 @@
 
   <ion-content>
     <ion-list>
-  <ion-item>
+  <ion-item *ngIf="loginData">
     <ion-thumbnail item-start>
-      <img src="assets/imgs/logo.png">
+      <img src="{{loginData.photoUrl}}">
     </ion-thumbnail>
-    <h2>Jelandi User</h2>
-    <p>jelandiuser@gmail.com</p>
+    <h2>{{loginData.username}}</h2>
+    <p>{{loginData.email}}</p>
   </ion-item>
    </ion-list>
     <ion-list>

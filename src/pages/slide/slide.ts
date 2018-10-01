@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { NavController, NavParams } from 'ionic-angular';
+import { LoginPage } from '../login/login';
 
 /**
  * Generated class for the SlidePage page.
@@ -19,6 +20,13 @@ export class SlidePage {
 
   ionViewDidLoad() {
     console.log('ionViewDidLoad SlidePage');
+  }
+
+  itemTapped(event, item) {
+    // That's right, we're pushing to ourselves!
+    this.navCtrl.push(LoginPage, {
+      item: item
+    });
   }
 
 }

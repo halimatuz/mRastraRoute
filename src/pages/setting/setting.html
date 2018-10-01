@@ -7,17 +7,46 @@
   </ion-navbar>
 </ion-header>
 
-<ion-content>
-  <ion-list>
-    <button ion-item *ngFor="let item of items" (click)="itemTapped($event, item)">
-      <ion-icon [name]="item.icon" item-start></ion-icon>
-      {{item.title}}
-      <div class="item-note" item-end>
-        {{item.note}}
-      </div>
-    </button>
+<ion-content >
+  <ion-card *ngIf="loginData" style="padding:10px; text-align: center" >
+  <ion-card-header style="background-color:orange">
+    <h2><strong>MY PROFILE</strong></h2>
+  </ion-card-header>
+ <ion-row>
+        <ion-col col-4></ion-col>
+        <ion-col col-4>
+           <img style="width: 80px; height: 80px;align-self: center" src="{{loginData.photoUrl}}">
+        </ion-col>
+        <ion-col col-4></ion-col>
+      </ion-row>
+   <ion-item style="text-align: center" >
+     
+    <h2>{{loginData.username}}</h2>
+    <p>{{loginData.email}}</p>
+  </ion-item>
+  <button style="background-color:orange;color:black" (click)="edit()" ion-button block >Edit</button>
+    </ion-card>
+
+
+  <ion-card style="padding:10px; text-align: center" >
+  <ion-card-header style="background-color:orange">
+    <h2><strong>FORM EDIT PROFILE</strong></h2>
+  </ion-card-header>
+  <ion-list >
+    <ion-item>
+    <ion-label fixed>Username</ion-label>
+    <ion-input type="text"  [(ngModel)]="SelectedUser" placeholder="Username" required></ion-input>
+  </ion-item>
+  <ion-item>
+    <ion-label fixed>Password</ion-label>
+    <ion-input type="password" [(ngModel)]="pass1" placeholder="Password" clearInput required></ion-input>
+  </ion-item>
+  <ion-item>
+    <ion-label  fixed>Re-Password</ion-label>
+    <ion-input type="password" [(ngModel)]="pass2" placeholder="Retype Password" clearInput required></ion-input>
+  </ion-item>
+    
+  <button style="background-color:orange;color:black" (click)="submit()" ion-button block >Submit</button>
   </ion-list>
-  <div *ngIf="selectedItem" padding>
-    You navigated here from <b>{{selectedItem.title}}</b>
-  </div>
+    </ion-card>
 </ion-content>

@@ -10,35 +10,39 @@
 
 <ion-content >
 <div padding>
-  <ion-segment [(ngModel)]="pet">
-    <ion-segment-button value="kittens">
-      Kittens
+  <ion-segment [(ngModel)]="data">
+    <ion-segment-button value="Delivered">
+      Terkirim
     </ion-segment-button>
-    <ion-segment-button value="puppies">
-      Puppies
+    <ion-segment-button value="Undelivered">
+      Belum Terkirim
     </ion-segment-button>
   </ion-segment>
 </div>
 
-<div [ngSwitch]="pet">
-  <ion-list *ngSwitchCase="'puppies'">
-    <ion-item (click)="itemTapped($event, 'gudang1')">
+<div [ngSwitch]="data">
+  <ion-list *ngSwitchCase="'Delivered'">
+    <ion-item *ngFor="let item of routeListTrue; index as i" (click)="itemTapped($event, item.$key)">
       <ion-thumbnail item-start>
         <img src="assets/imgs/logo.png">
       </ion-thumbnail>
-      <h2>My Neighbor Totoro</h2>
-      <p>Hayao Miyazaki • 1988</p>
+      <h2>Sub Route {{i}} ({{lengthTrue[i]}} desa)</h2>
+      <p>{{desaFalse[i]}}</p>
+      <p>Terkirim</p>
       <button ion-button clear item-end><ion-icon name="arrow-dropright"></ion-icon></button>
     </ion-item>
 
   </ion-list>
 
-  <ion-list *ngSwitchCase="'kittens'">
-    <ion-item>
+  <ion-list *ngSwitchCase="'Undelivered'">
+    <ion-item *ngFor="let item of routeListFalse; index as x" (click)="itemTapped($event, item.$key)">
       <ion-thumbnail item-start>
-        <img src="assets/imgs/warehouse.png">
+        <img src="assets/imgs/logo.png">
       </ion-thumbnail>
-      <h2>Luna</h2>
+      <h2>Sub Route {{x}} ({{lengthFalse[x]}} desa)</h2>
+      <p>{{desaFalse[x]}}</p>
+      <p>Belum Terkirim</p>
+      <button ion-button clear item-end><ion-icon name="arrow-dropright"></ion-icon></button>
     </ion-item>
   
   </ion-list>
