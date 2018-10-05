@@ -12,6 +12,7 @@ import { Route } from '../../providers/route/route.model';
 })
 export class DetailRoutePage {
 selectedItem: any;
+selectedKoor: any[];
 routeListTrue: Route[];
 routeListFalse: Route[];
 desaTrue: string[]=[];
@@ -27,7 +28,7 @@ data='Delivered';
     
     ) {
     this.selectedItem = navParams.get('item');
-    
+    this.selectedKoor = navParams.get('koor');
   }
 
   ionViewDidLoad() {
@@ -77,9 +78,12 @@ data='Delivered';
   }
   itemTapped(event, item) {
     // That's right, we're pushing to ourselves!
+    if(this.selectedKoor.length>0){
     this.navCtrl.push(DetailSubRoutePage, {
-      item: item
+      item: item,
+      koor: this.selectedKoor
     });
+    }
   }
 
 }

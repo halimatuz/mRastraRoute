@@ -30,8 +30,16 @@ export class SettingPage {
 
   ionViewDidLoad() {
     this.afAuth.authState.subscribe(auth => {
-      //console.log(auth);
+     // console.log(auth);
+
+     
       if(auth){
+
+        let toast = this.toastCtrl.create({
+                      message: "Welcome, "+auth.displayName,
+                      duration: 5000
+                    });
+                    toast.present();
         
         this.loginData.email=auth.email;
         this.loginData.username=auth.displayName;
@@ -59,6 +67,7 @@ export class SettingPage {
                     toast.present();
                 }
                 else{
+                  console.log('Updated');
                 this.updateCurrentUser(this.SelectedUser)
                 .then(res => {
                 console.log(res);

@@ -5,6 +5,8 @@ import { DetailRoutePage } from '../detail-route/detail-route';
 import { GudangProvider } from '../../providers/gudang/gudang';
 import { Gudang } from '../../providers/gudang/gudang.model';
 
+import { HttpClient } from '@angular/common/http'; 
+import { Observable } from 'rxjs/Observable';
 
 
 
@@ -15,13 +17,22 @@ import { Gudang } from '../../providers/gudang/gudang.model';
 export class HomePage {
   gudangList: Gudang[];
   loading:any;
+  distance: any[];
   constructor(
     public navCtrl: NavController,
     private gudangProvider: GudangProvider,
-    
+    private http: HttpClient,
     public loadingCtrl: LoadingController
     ) {
-      //read gudang
+      this.loading = this.loadingCtrl.create({
+        content: 'Please wait...'
+      });
+      this.InitializeDistance().then(res => {
+        if(res){
+          this.loading.dismiss();
+          
+        }
+      });
        
         
   }
@@ -39,7 +50,8 @@ export class HomePage {
         y["$key"] = element.key;
         this.gudangList.push(y as Gudang);
       });
-      this.loading.dismiss();
+      
+      
             
     });
 
@@ -49,9 +61,33 @@ export class HomePage {
 
   itemTapped(event, item) {
     // That's right, we're pushing to ourselves!
-    this.navCtrl.push(DetailRoutePage, {
-      item: item
-
+    if(this.distance.length>0){
+      this.navCtrl.push(DetailRoutePage, {
+      item: item,
+      koor : this.distance
     });
+    }
+    
   }
+  //mengambil data jarak json
+  public getJSON(): Observable<any> {
+        return this.http.get("./assets/data/Koordinat.json")
+    }
+//menyimpan data jarak json in array
+  InitializeDistance(){
+return new Promise((resolve,reject) =>{
+    
+ let i=0;
+    this.distance=[];
+    this.getJSON().subscribe(data => {
+      data.forEach(item =>{
+        
+        this.distance[i]=item['koor'];
+         i++;
+      });
+       return resolve(true);
+        });
+});
+
+}
 }

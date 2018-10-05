@@ -1,7 +1,10 @@
-import { Component } from '@angular/core';
+import { Component,  ViewChild, ElementRef } from '@angular/core';
 import { NavController, NavParams, LoadingController, ToastController, AlertController } from 'ionic-angular';
 import { RouteProvider } from '../../providers/route/route';
 
+
+
+declare var google;
 
 
 @Component({
@@ -9,18 +12,28 @@ import { RouteProvider } from '../../providers/route/route';
   templateUrl: 'detail-sub-route.html',
 })
 export class DetailSubRoutePage {
+  @ViewChild('map') mapElement: ElementRef;
+  map: any;
+  directionsService = new google.maps.DirectionsService;
+  directionsDisplay = new google.maps.DirectionsRenderer;
   routeList: any[];
   selectedItem :any;
   desaList: any[];
+  selectedKoor : any [];
+  routeidx : number[];
   constructor(
     public navCtrl: NavController, 
     public navParams: NavParams,
     private routeProvider: RouteProvider,
     public loadingCtrl: LoadingController,
     private toastCtrl: ToastController,
-    public alertCtrl: AlertController
+    public alertCtrl: AlertController,
+    
     ) {
       this.selectedItem = navParams.get('item');
+      this.selectedKoor = navParams.get('koor');
+    
+      
   }
 
   ionViewDidLoad() {
@@ -52,12 +65,25 @@ export class DetailSubRoutePage {
                 
           });
           this.routeList.push(arr);
-          console.log(this.selectedItem);
-          console.log(this.desaList);
-          console.log(this.routeList);
+          this.routeidx=[];
+          this.routeidx.push(this.routeList[0]['fgudang']);
+          for(let b=0; b<this.desaList.length;b++){
+            let num=7+this.desaList[b]['index'];
+            this.routeidx.push(num);
+          }
+
+          this.initMap();
           loading.dismiss();
         });
   
+  }
+  initMap() {
+    this.map = new google.maps.Map(this.mapElement.nativeElement, {
+      zoom: 7,
+      center: this.ShowRoute(this.selectedKoor[this.routeidx[0]],this.selectedKoor[this.routeidx[1]])
+    });
+
+    this.directionsDisplay.setMap(this.map);
   }
   antar(){
     const confirm = this.alertCtrl.create({
@@ -87,5 +113,18 @@ export class DetailSubRoutePage {
    
 
   }
-
+  ShowRoute(org : string, dest : string) {
+    this.directionsService.route({
+      origin: org,
+      destination: dest,
+      travelMode: 'DRIVING'
+    }, (response, status) => {
+      if (status === 'OK') {
+        this.directionsDisplay.setDirections(response);
+      } else {
+        window.alert('Directions request failed due to ' + status);
+      }
+    });
+  }
+  
 }
