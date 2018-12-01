@@ -15,10 +15,10 @@ selectedItem: any;
 selectedKoor: any[];
 routeListTrue: Route[];
 routeListFalse: Route[];
-desaTrue: string[]=[];
-desaFalse: string[]=[];
-lengthTrue : number[]=[];
-lengthFalse : number[]=[];
+desaTrue: string[];
+desaFalse: string[];
+lengthTrue : number[];
+lengthFalse : number[];
 data='Delivered';
   constructor(
     public navCtrl: NavController, 
@@ -40,6 +40,10 @@ data='Delivered';
             a.snapshotChanges().subscribe(item => {
               this.routeListTrue= [];
               this.routeListFalse= [];
+              this.desaTrue=[];
+              this.desaFalse=[];
+              this.lengthTrue=[];
+              this.lengthFalse=[];
               item.forEach(element => {
                 var y = element.payload.toJSON();
                 y["$key"] = element.key;

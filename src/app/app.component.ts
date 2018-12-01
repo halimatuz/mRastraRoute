@@ -6,7 +6,7 @@ import { SplashScreen } from '@ionic-native/splash-screen';
 import { HomePage } from '../pages/home/home';
 import { SettingPage } from '../pages/setting/setting';
 import { SlidePage } from '../pages/slide/slide';
-import { LoginPage } from '../pages/login/login';
+//import { LoginPage } from '../pages/login/login';
 
 import { AngularFireAuth } from 'angularfire2/auth';
 
@@ -37,7 +37,7 @@ export class MyApp {
     this.afAuth.authState.subscribe(auth => {
       
       if(!auth)
-        this.rootPage = LoginPage;
+        this.rootPage = SlidePage;
       else{
         this.loginData.email=auth.email;
         this.loginData.username=auth.displayName;
@@ -66,7 +66,7 @@ export class MyApp {
     this.afAuth.authState.subscribe(auth => {
       
       if(!auth)
-        this.rootPage = LoginPage;
+        this.rootPage = SlidePage;
       else{
         this.loginData.email=auth.email;
         this.loginData.username=auth.displayName;

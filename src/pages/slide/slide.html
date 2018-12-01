@@ -10,20 +10,21 @@
 <ion-content >
 <ion-slides pager>
 
-  <ion-slide style="background-image: url('../assets/imgs/Untitledbg.png')">
-    <h2>Slide 1</h2>
+  <ion-slide style="background-image: url('assets/imgs/slide1.png');background-size: 100%" >
+    
   </ion-slide>
 
-  <ion-slide style="background-color: blue">
-    <h2>Slide 2</h2>
+  <ion-slide style="background-image: url('assets/imgs/slide2.png');background-size: 100%">
+  
   </ion-slide>
 
-  <ion-slide style="background-color: red">
-    <h2>Slide 3</h2>
-      <button color="light" ion-button round outline icon-end (click)="itemTapped($event, 'gudang1')">
+  <ion-slide style="background-image: url('assets/imgs/slide3.png');background-size: 100%">
+  <div style="position: fixed;bottom:0;left: 0;right: 0;padding-bottom: 10%">
+      <button color="dark" ion-button round outline icon-end (click)="itemTapped($event, 'gudang1')" bottom>
         Get Started !
         <ion-icon name="arrow-dropright" ></ion-icon>
       </button>
+      </div>
   </ion-slide>
 
 </ion-slides>
