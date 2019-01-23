@@ -1,6 +1,6 @@
 # M Rastra Route : Mobile Platform 
 
-M Rastra Route (Mobile Platform) is a system that displays the distribution routes of Rastra produced by [Rastra Route in Web Platform] (https://halimatuz.github.io/RastraRoute/dashboard) on an interactive map.
+M Rastra Route (Mobile Platform) is a system that displays the distribution routes of Rastra produced by [Rastra Route in Web Platform](https://halimatuz.github.io/RastraRoute/dashboard) on an interactive map.
 
 
 
